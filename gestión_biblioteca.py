@@ -1,6 +1,3 @@
-import json
-import os
-
 class Libro:
     def __init__(self, titulo, autor, isbn, disponible=True):
         """ Constructor de la clase Libro. """
@@ -49,18 +46,28 @@ class Libro:
         return f"- {self.titulo} ({self.autor}) - ISBN: {self.isbn} - Disponible: {estado}"
 
 
-def guardar_libros(biblioteca):
-    """ Guarda los libros en un archivo JSON. """
-    with open("biblioteca.json", "w") as archivo:
-        json.dump([libro.to_dict() for libro in biblioteca], archivo)
-
-
 def cargar_libros():
     """ Carga los libros desde un archivo JSON. """
-    if os.path.exists("biblioteca.json"):
-        with open("biblioteca.json", "r") as archivo:
-            return [Libro.from_dict(libro) for libro in json.load(archivo)]
-    return []
+    return [
+                {
+                    "titulo": "El Quijote",
+                    "autor": "Cervantes ",
+                    "isbn": "12345",
+                    "disponible": True
+                },
+                {
+                    "titulo": "El cuento de la criada",
+                    "autor": "Margaret Atwood",
+                    "isbn": "67890",
+                    "disponible": True
+                },
+                {
+                    "titulo": "Fundaci\u00f3n",
+                    "autor": "Isaac Asimov",
+                    "isbn": "11223",
+                    "disponible": True
+                }
+            ]
 
 
 def mostrar_biblioteca(biblioteca):
@@ -93,7 +100,6 @@ while True:
         isbn_nuevo = input("ISBN: ")
         nuevo_libro = Libro(titulo_nuevo, autor_nuevo, isbn_nuevo)
         biblioteca.append(nuevo_libro)
-        guardar_libros(biblioteca)
         print("Libro agregado con éxito.")
 
     elif opcion == '2':
@@ -101,7 +107,6 @@ while True:
         libro_encontrado = next((libro for libro in biblioteca if libro.buscar(isbn_prestar)), None)
         if libro_encontrado:
             libro_encontrado.prestar()
-            guardar_libros(biblioteca)
         else:
             print("No se encontró ningún libro con ese ISBN.")
 
@@ -110,7 +115,6 @@ while True:
         libro_encontrado = next((libro for libro in biblioteca if libro.buscar(isbn_devolver)), None)
         if libro_encontrado:
             libro_encontrado.devolver()
-            guardar_libros(biblioteca)
         else:
             print("No se encontró ningún libro con ese ISBN.")
 
@@ -126,7 +130,6 @@ while True:
             print("No se encontró ningún libro con ese ISBN.")
 
     elif opcion == '6':
-        guardar_libros(biblioteca)
         print("¡Gracias por usar el sistema!")
         break
 
