@@ -47,34 +47,28 @@ class Libro:
 
 
 def cargar_libros():
-    """ Carga los libros desde un archivo JSON. """
+    """ Carga los libros iniciales. """
     return [
-                {
-                    "titulo": "El Quijote",
-                    "autor": "Cervantes ",
-                    "isbn": "12345",
-                    "disponible": True
-                },
-                {
-                    "titulo": "El cuento de la criada",
-                    "autor": "Margaret Atwood",
-                    "isbn": "67890",
-                    "disponible": True
-                },
-                {
-                    "titulo": "Fundaci\u00f3n",
-                    "autor": "Isaac Asimov",
-                    "isbn": "11223",
-                    "disponible": True
-                }
-            ]
+        Libro("El Quijote", "Cervantes", "12345", True),
+        Libro("El cuento de la criada", "Margaret Atwood", "67890", True),
+        Libro("Fundaci\u00f3n","Isaac Asimov", "11223",  True),  
+        ]
 
+def muestra_disponible(disponible):
+    if disponible:
+        return "Sí"
+    else:
+        return "No"
+
+def muestra_libro(libro: Libro):
+    # - El Quijote (Cervantes) - ISBN: 12345 - Disponible: Sí
+    print(" - " + libro.titulo + " (" + libro.autor + ") - ISBN: "  +libro.isbn + " - Disponible: " + muestra_disponible(libro.disponible))
 
 def mostrar_biblioteca(biblioteca):
     """ Muestra la información de todos los libros en la biblioteca. """
     if biblioteca:
         for libro in biblioteca:
-            print(libro)
+            muestra_libro(libro)
     else:
         print("La biblioteca está vacía.")
 
